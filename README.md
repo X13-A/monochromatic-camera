@@ -85,10 +85,10 @@ This pipeline can simulate bee vision by adapting the hardware.  Bees see **UV, 
 
 Instead of false-color, we display a **human-readable image enhanced with bee UV perception**:
 
-- **Green, Blue, Yellow** → Mapped to visible color channels
-- **UV (from Blue filter)** → Mapped to **luminance**
+- **Green, Blue** → Mapped to visible color channels
+- **UV** → Mapped to **luminance**
 
-This lets us see the world normally, but with UV-reflective areas appearing **brighter** — just as bees perceive them.  For example, flower centers that reflect UV will "glow," revealing the navigational patterns bees use.
+This lets us see the world normally, but with UV-reflective areas appearing **brighter** — just as bees perceive them. For example, flower centers that reflect UV will "glow," revealing the navigational patterns bees use. 
 
 ### Hardware Requirements
 
@@ -97,8 +97,8 @@ This lets us see the world normally, but with UV-reflective areas appearing **br
 | **Camera** | UV-sensitive sensor (no UV/IR cut filter) | Standard cameras block UV; bees see down to ~300 nm |
 | **Lens** | Quartz or UV-transmissive glass | Regular glass absorbs UV light |
 | **UV Filter** | Bandpass ~320–400 nm | Captures UV reflectance for luminance mapping |
-| **Blue Filter** | Bandpass ~400–500 nm | Visible blue channel |
-| **Yellow/Green Filter** | Bandpass ~500–600 nm | Visible yellow-green channel |
+| **Blue Filter** | Bandpass ~400–500 nm | Matches bee "medium" receptor (~436 nm) |
+| **Green Filter** | Bandpass ~500–600 nm | Matches bee "long" receptor (~544 nm) |
 | **Calibration Light** | UV-inclusive source (xenon/deuterium) | Must emit UV for proper calibration |
 | **Spectrometer** | UV-capable (≥300 nm) | Measure calibration light in UV range |
 
@@ -106,9 +106,8 @@ This lets us see the world normally, but with UV-reflective areas appearing **br
 
 | Captured Channel | Mapped To |
 |------------------|-----------|
-| Yellow/Green | Color (Yellow) |
-| Blue | Color (Blue) |
 | Green | Color (Green) |
+| Blue | Color (Blue) |
 | UV | Luminance boost |
 
 ### Result

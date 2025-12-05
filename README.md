@@ -153,3 +153,4 @@ The processing pipeline remains identical — only the inputs and final mapping 
 - Optimize using linear regression
 - Cost function: DeltaE0D
 - Achieve minimal difference in skintone only
+- Pass skin reflectance spectrum through filter and sensitivity functions to get the reference color (best case)

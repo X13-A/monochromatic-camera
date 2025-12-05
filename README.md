@@ -2,14 +2,14 @@
 
 ## Overview
 
-This project reconstructs true-color images from grayscale photographs taken with a monochromatic camera using three optical filters.  Since the filters are not pure RGB and the camera has its own spectral sensitivity, we apply spectral corrections to produce accurate color output.
+This project reconstructs true-color images from grayscale photographs taken with a monochromatic camera using three optical filters.   Since the filters are not pure RGB and the camera has its own spectral sensitivity, we apply spectral corrections to produce accurate color output in **ACES (Academy Color Encoding System)** color space.
 
 ## Problem
 
 Simply assigning the three filtered images to R, G, and B channels produces incorrect colors because:
 
 1. **Filter transmission** — The filters do not match ideal red, green, and blue wavelengths
-2.  **Camera sensitivity** — The sensor responds differently across the spectrum
+2.   **Camera sensitivity** — The sensor responds differently across the spectrum
 
 ## Solution
 
@@ -18,7 +18,7 @@ We characterize the imaging system by measuring:
 - **Camera spectral sensitivity** — How the sensor responds at each wavelength
 - **Reference light spectrum** — The known spectral output of a calibration light source
 
-By comparing perceived vs. reference light, we build a **sensitivity map** to correct the captured images.
+By comparing perceived vs. reference light, we build a **sensitivity map** to correct the captured images. 
 
 ## Workflow
 
@@ -44,11 +44,11 @@ By comparing perceived vs. reference light, we build a **sensitivity map** to co
 ├─────────────────────────────────────────────────────────────────┤
 │  5. Apply spectral correction using sensitivity map             │
 │  6. Transform filter responses to CIE XYZ color space           │
-│  7. Convert XYZ to sRGB for display                             │
+│  7. Convert XYZ to ACES2065-1 (AP0 primaries)                   │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
-                    [ Final Color Image ]
+                   [ Final ACES Color Image ]
 ```
 
 ## Required Data
@@ -64,26 +64,32 @@ By comparing perceived vs. reference light, we build a **sensitivity map** to co
 The corrected pixel values are computed as:
 
 ```
-C_corrected = M × [I_F1, I_F2, I_F3]^T
+C_corrected = M_aces × M_xyz × [I_F1, I_F2, I_F3]^T
 ```
 
 Where:
 - `I_Fn` = Intensity from filter n (corrected for camera sensitivity)
-- `M` = 3×3 transformation matrix (filter space → XYZ or RGB)
+- `M_xyz` = 3×3 transformation matrix (filter space → CIE XYZ)
+- `M_aces` = 3×3 transformation matrix (XYZ → ACES2065-1)
 
 ## Output
 
-A single true-color image reconstructed from the three filtered grayscale captures, with spectral corrections applied. 
+A single true-color image in **ACES2065-1** color space (`. exr` format recommended), ready for:
+- Professional color grading pipelines
+- VFX compositing
+- Archival with wide color gamut preservation
+
+For display, apply an appropriate **Output Transform (RRT + ODT)** to convert to the target display (e.g., sRGB, Rec.709, P3).
 
 ---
 
 ## Bee Vision Extension
 
-This pipeline can simulate bee vision by adapting the hardware.  Bees see **UV, Blue, and Green** instead of R, G, B.  We map this to human-visible colors while preserving UV information as luminance.
+This pipeline can simulate bee vision by adapting the hardware.  Bees see **UV, Blue, and Green** instead of R, G, B.   We map this to human-visible colors while preserving UV information as luminance.
 
 ### Approach
 
-Instead of false-color, we display a **human-readable image enhanced with bee UV perception**:
+We display a **human-readable image enhanced with bee UV perception**:
 
 - **Green, Blue** → Mapped to visible color channels
 - **UV** → Mapped to **luminance**

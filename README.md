@@ -71,7 +71,7 @@ Filter transmission curves are provided by the manufacturer, but filters can **d
 │  1. Measure light source spectrum without filter (reference)    │
 │  2. Place filter in light path                                  │
 │  3. Measure transmitted spectrum                                │
-│  4.  Compute: Transmission(λ) = Transmitted(λ) / Reference(λ)   │
+│  4. Compute: Transmission(λ) = Transmitted(λ) / Reference(λ)    │
 │  5. Compare with manufacturer datasheet                         │
 └─────────────────────────────────────────────────────────────────┘
 ```

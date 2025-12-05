@@ -95,7 +95,7 @@ C_corrected = M_aces × M_xyz × [I_F1, I_F2, I_F3]^T
 ```
 
 Where:
-- `I_Fn` = Intensity from filter n (corrected for camera sensitivity)
+- `I_Fn` = Intensity from filter n
 - `M_xyz` = 3×3 transformation matrix (filter space → CIE XYZ)
 - `M_aces` = 3×3 transformation matrix (XYZ → ACES2065-1)
 

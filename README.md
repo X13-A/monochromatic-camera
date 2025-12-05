@@ -60,23 +60,14 @@ By comparing perceived vs. reference light, we build a **sensitivity map** to ma
 
 ## Filter Transmittance Measurement
 
-Filter transmission curves are provided by the manufacturer, but filters can **degrade over time**. We measure the actual transmittance to verify against the datasheet.
-
-### Output
-
-| File | Content |
-|------|---------|
-| `filter_X_transmission_measured.csv` | Wavelength (nm), Transmission (0–1) |
-| `filter_X_transmission_datasheet.csv` | Manufacturer reference curve |
-
-Compare curves to detect filter degradation (yellowing, coating damage, etc.).
+Filter transmission curves are provided by the manufacturer, but filters can **degrade over time**. We measure the actual transmittance which is more accurate.
 
 ## Color Reconstruction
 
-The corrected pixel values are computed as:
+The reconstructed pixel values are computed as:
 
 ```
-C_corrected = M_aces × M_xyz × [I_F1, I_F2, I_F3]^T
+C_reconstructed = M_aces × M_xyz × [I_F1, I_F2, I_F3]^T
 ```
 
 Where:
@@ -86,12 +77,7 @@ Where:
 
 ## Output
 
-A single true-color image in **ACES2065-1** color space (`. exr` format recommended), ready for:
-- Professional color grading pipelines
-- VFX compositing
-- Archival with wide color gamut preservation
-
-For display, apply an appropriate **Output Transform (RRT + ODT)** to convert to the target display (e.g., sRGB, Rec.709, P3).
+A single true-color image in **ACES2065-1** color space.
 
 ---
 
@@ -108,7 +94,7 @@ We display a **human-readable image enhanced with bee UV perception**:
 
 This lets us see the world normally, but with UV-reflective areas appearing **brighter** — just as bees perceive them. For example, flower centers that reflect UV will "glow," revealing the navigational patterns bees use.  
 
-### Hardware Requirements
+### Theorical Hardware Requirements
 
 | Component | Specification | Why |
 |-----------|---------------|-----|
@@ -130,11 +116,11 @@ This lets us see the world normally, but with UV-reflective areas appearing **br
 
 ### Result
 
-A natural-looking image where **UV-reflective areas appear brighter**, revealing hidden patterns visible to bees but invisible to humans — like floral nectar guides.  
+An image where **UV-reflective areas appear brighter**, revealing hidden patterns visible to bees but invisible to humans, such as floral nectar guides.
 
 The processing pipeline remains identical — only the inputs and final mapping change. 
 
-### WIP: TRANSFORM (UV, R, B) -> (R, G, B)
+### WIP: HOW TO FIND TRANSFORM (UV, R, B) -> (R, G, B)
 - Optimize using linear regression
 - Cost function: DeltaE0D
 - Achieve minimal difference in skintone only between XYZ and reconstructed RGB

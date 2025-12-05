@@ -62,20 +62,6 @@ By comparing perceived vs. reference light, we build a **sensitivity map** to ma
 
 Filter transmission curves are provided by the manufacturer, but filters can **degrade over time**. We measure the actual transmittance to verify against the datasheet.
 
-### How to Measure
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│            FILTER TRANSMITTANCE MEASUREMENT                     │
-├─────────────────────────────────────────────────────────────────┤
-│  1. Measure light source spectrum without filter (reference)    │
-│  2. Place filter in light path                                  │
-│  3. Measure transmitted spectrum                                │
-│  4. Compute: Transmission(λ) = Transmitted(λ) / Reference(λ)    │
-│  5. Compare with manufacturer datasheet                         │
-└─────────────────────────────────────────────────────────────────┘
-```
-
 ### Output
 
 | File | Content |

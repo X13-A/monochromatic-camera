@@ -75,10 +75,20 @@ Where:
 
 A single true-color image reconstructed from the three filtered grayscale captures, with spectral corrections applied. 
 
+---
 
 ## Bee Vision Extension
 
-This pipeline can simulate bee vision by adapting the hardware.  Bees are trichromatic but see **UV, Blue, and Green** instead of R, G, B. 
+This pipeline can simulate bee vision by adapting the hardware.  Bees see **UV, Blue, and Green** instead of R, G, B.  We map this to human-visible colors while preserving UV information as luminance.
+
+### Approach
+
+Instead of false-color, we display a **human-readable image enhanced with bee UV perception**:
+
+- **Green, Blue, Yellow** → Mapped to visible color channels
+- **UV (from Blue filter)** → Mapped to **luminance**
+
+This lets us see the world normally, but with UV-reflective areas appearing **brighter** — just as bees perceive them.  For example, flower centers that reflect UV will "glow," revealing the navigational patterns bees use.
 
 ### Hardware Requirements
 
@@ -86,20 +96,23 @@ This pipeline can simulate bee vision by adapting the hardware.  Bees are trichr
 |-----------|---------------|-----|
 | **Camera** | UV-sensitive sensor (no UV/IR cut filter) | Standard cameras block UV; bees see down to ~300 nm |
 | **Lens** | Quartz or UV-transmissive glass | Regular glass absorbs UV light |
-| **UV Filter** | Bandpass ~320–400 nm | Captures the UV channel bees perceive |
-| **Blue Filter** | Bandpass ~400–500 nm | Matches bee "medium" receptor peak (~436 nm) |
-| **Green Filter** | Bandpass ~500–600 nm | Matches bee "long" receptor peak (~544 nm) |
+| **UV Filter** | Bandpass ~320–400 nm | Captures UV reflectance for luminance mapping |
+| **Blue Filter** | Bandpass ~400–500 nm | Visible blue channel |
+| **Yellow/Green Filter** | Bandpass ~500–600 nm | Visible yellow-green channel |
 | **Calibration Light** | UV-inclusive source (xenon/deuterium) | Must emit UV for proper calibration |
 | **Spectrometer** | UV-capable (≥300 nm) | Measure calibration light in UV range |
 
-### Output
+### Output Mapping
 
-A **false-color image** mapping bee perception to human-visible colors:
+| Captured Channel | Mapped To |
+|------------------|-----------|
+| Yellow/Green | Color (Yellow) |
+| Blue | Color (Blue) |
+| Green | Color (Green) |
+| UV | Luminance boost |
 
-| Bee Channel | Displayed As |
-|-------------|--------------|
-| UV | Red |
-| Blue | Green |
-| Green | Blue |
+### Result
 
-The processing pipeline remains identical — only the inputs change. 
+A natural-looking image where **UV-reflective areas appear brighter**, revealing hidden patterns visible to bees but invisible to humans — like floral nectar guides. 
+
+The processing pipeline remains identical — only the inputs and final mapping change. 

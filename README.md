@@ -74,3 +74,32 @@ Where:
 ## Output
 
 A single true-color image reconstructed from the three filtered grayscale captures, with spectral corrections applied. 
+
+
+## Bee Vision Extension
+
+This pipeline can simulate bee vision by adapting the hardware.  Bees are trichromatic but see **UV, Blue, and Green** instead of R, G, B. 
+
+### Hardware Requirements
+
+| Component | Specification | Why |
+|-----------|---------------|-----|
+| **Camera** | UV-sensitive sensor (no UV/IR cut filter) | Standard cameras block UV; bees see down to ~300 nm |
+| **Lens** | Quartz or UV-transmissive glass | Regular glass absorbs UV light |
+| **UV Filter** | Bandpass ~320–400 nm | Captures the UV channel bees perceive |
+| **Blue Filter** | Bandpass ~400–500 nm | Matches bee "medium" receptor peak (~436 nm) |
+| **Green Filter** | Bandpass ~500–600 nm | Matches bee "long" receptor peak (~544 nm) |
+| **Calibration Light** | UV-inclusive source (xenon/deuterium) | Must emit UV for proper calibration |
+| **Spectrometer** | UV-capable (≥300 nm) | Measure calibration light in UV range |
+
+### Output
+
+A **false-color image** mapping bee perception to human-visible colors:
+
+| Bee Channel | Displayed As |
+|-------------|--------------|
+| UV | Red |
+| Blue | Green |
+| Green | Blue |
+
+The processing pipeline remains identical — only the inputs change. 

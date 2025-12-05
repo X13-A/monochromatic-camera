@@ -149,8 +149,8 @@ A natural-looking image where **UV-reflective areas appear brighter**, revealing
 
 The processing pipeline remains identical — only the inputs and final mapping change. 
 
-### WIP: TRANSFORM
+### WIP: TRANSFORM (UV, R, B) -> (R, G, B)
 - Optimize using linear regression
 - Cost function: DeltaE0D
-- Achieve minimal difference in skintone only
+- Achieve minimal difference in skintone only between XYZ and reconstructed RGB
 - Pass skin reflectance spectrum through filter and sensitivity functions to get the reference color (best case)

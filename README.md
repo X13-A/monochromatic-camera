@@ -2,14 +2,14 @@
 
 ## Overview
 
-This project reconstructs true-color images from grayscale photographs taken with a monochromatic camera using three optical filters.   Since the filters are not pure RGB and the camera has its own spectral sensitivity, we apply spectral corrections to produce accurate color output in **ACES (Academy Color Encoding System)** color space.
+This project reconstructs true-color images from grayscale photographs taken with a monochromatic camera using three optical filters.    Since the filters are not pure RGB and the camera has its own spectral sensitivity, we apply spectral corrections to produce accurate color output in **ACES (Academy Color Encoding System)** color space. 
 
 ## Problem
 
 Simply assigning the three filtered images to R, G, and B channels produces incorrect colors because:
 
 1. **Filter transmission** — The filters do not match ideal red, green, and blue wavelengths
-2.   **Camera sensitivity** — The sensor responds differently across the spectrum
+2.    **Camera sensitivity** — The sensor responds differently across the spectrum
 
 ## Solution
 
@@ -18,7 +18,7 @@ We characterize the imaging system by measuring:
 - **Camera spectral sensitivity** — How the sensor responds at each wavelength
 - **Reference light spectrum** — The known spectral output of a calibration light source
 
-By comparing perceived vs. reference light, we build a **sensitivity map** to correct the captured images. 
+By comparing perceived vs. reference light, we build a **sensitivity map** to correct the captured images.  
 
 ## Workflow
 
@@ -44,7 +44,7 @@ By comparing perceived vs. reference light, we build a **sensitivity map** to co
 ├─────────────────────────────────────────────────────────────────┤
 │  5. Apply spectral correction using sensitivity map             │
 │  6. Transform filter responses to CIE XYZ color space           │
-│  7. Convert XYZ to ACES2065-1 (AP0 primaries)                   │
+│  7.  Convert XYZ to ACES2065-1 (AP0 primaries)                   │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
@@ -58,6 +58,33 @@ By comparing perceived vs. reference light, we build a **sensitivity map** to co
 | `reference_light_spectrum.csv` | Spectral power distribution of calibration light |
 | `camera_response. csv` | Measured camera output under calibration light |
 | `filter_X_transmission.csv` | Transmission curve for each filter (×3) |
+
+## Filter Transmittance Measurement
+
+Filter transmission curves are provided by the manufacturer, but filters can **degrade over time**. We measure the actual transmittance to verify against the datasheet.
+
+### How to Measure
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│            FILTER TRANSMITTANCE MEASUREMENT                     │
+├─────────────────────────────────────────────────────────────────┤
+│  1. Measure light source spectrum without filter (reference)    │
+│  2. Place filter in light path                                  │
+│  3. Measure transmitted spectrum                                │
+│  4.  Compute: Transmission(λ) = Transmitted(λ) / Reference(λ)   │
+│  5. Compare with manufacturer datasheet                         │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Output
+
+| File | Content |
+|------|---------|
+| `filter_X_transmission_measured.csv` | Wavelength (nm), Transmission (0–1) |
+| `filter_X_transmission_datasheet.csv` | Manufacturer reference curve |
+
+Compare curves to detect filter degradation (yellowing, coating damage, etc.).
 
 ## Color Reconstruction
 
@@ -94,7 +121,7 @@ We display a **human-readable image enhanced with bee UV perception**:
 - **Green, Blue** → Mapped to visible color channels
 - **UV** → Mapped to **luminance**
 
-This lets us see the world normally, but with UV-reflective areas appearing **brighter** — just as bees perceive them. For example, flower centers that reflect UV will "glow," revealing the navigational patterns bees use. 
+This lets us see the world normally, but with UV-reflective areas appearing **brighter** — just as bees perceive them. For example, flower centers that reflect UV will "glow," revealing the navigational patterns bees use.  
 
 ### Hardware Requirements
 
@@ -118,6 +145,6 @@ This lets us see the world normally, but with UV-reflective areas appearing **br
 
 ### Result
 
-A natural-looking image where **UV-reflective areas appear brighter**, revealing hidden patterns visible to bees but invisible to humans — like floral nectar guides. 
+A natural-looking image where **UV-reflective areas appear brighter**, revealing hidden patterns visible to bees but invisible to humans — like floral nectar guides.  
 
 The processing pipeline remains identical — only the inputs and final mapping change. 

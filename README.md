@@ -18,7 +18,7 @@ We characterize the imaging system by measuring:
 - **Camera spectral sensitivity** — How the sensor responds at each wavelength
 - **Reference light spectrum** — The known spectral output of a calibration light source
 
-By comparing perceived vs. reference light, we build a **sensitivity map** to correct the captured images.  
+By comparing perceived vs. reference light, we build a **sensitivity map** to match the dataset images as if they were shot through our camera.  
 
 ## Workflow
 
@@ -42,9 +42,8 @@ By comparing perceived vs. reference light, we build a **sensitivity map** to co
 ┌─────────────────────────────────────────────────────────────────┐
 │                      PROCESSING PHASE                           │
 ├─────────────────────────────────────────────────────────────────┤
-│  5. Apply spectral correction using sensitivity map             │
-│  6. Transform filter responses to CIE XYZ color space           │
-│  7.  Convert XYZ to ACES2065-1 (AP0 primaries)                   │
+│  5. Transform filter responses to CIE XYZ color space           │
+│  6. Convert XYZ to ACES2065-1 (AP0 primaries)                   │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼

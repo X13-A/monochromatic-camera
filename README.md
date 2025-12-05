@@ -148,3 +148,7 @@ This lets us see the world normally, but with UV-reflective areas appearing **br
 A natural-looking image where **UV-reflective areas appear brighter**, revealing hidden patterns visible to bees but invisible to humans — like floral nectar guides.  
 
 The processing pipeline remains identical — only the inputs and final mapping change. 
+
+### WIP: TRANSFORM
+- Optimize using linear regression
+- Cost function: DeltaE0D

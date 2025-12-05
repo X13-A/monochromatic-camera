@@ -152,3 +152,4 @@ The processing pipeline remains identical — only the inputs and final mapping 
 ### WIP: TRANSFORM
 - Optimize using linear regression
 - Cost function: DeltaE0D
+- Achieve minimal difference in skintone only
